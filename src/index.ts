@@ -1,6 +1,5 @@
 import { Plugin } from 'rollup';
 import { createFilter } from '@rollup/pluginutils';
-import { Node } from 'estree';
 import { walk } from 'estree-walker';
 import MagicString from 'magic-string';
 
@@ -41,7 +40,7 @@ export function isEmpty(array: any[] | undefined) {
   return !array || array.length === 0;
 }
 
-export function getRequireSource(node: any): Node | false {
+export function getRequireSource(node: any): any | false {
   if (node.type !== NodeType.CallExpression) {
     return false;
   }
@@ -59,7 +58,7 @@ export function getRequireSource(node: any): Node | false {
   return args[0];
 }
 
-export function getImportSource(node: any): Node | false {
+export function getImportSource(node: any): any | false {
   if (node.type !== NodeType.ImportDeclaration || node.source.type !== NodeType.Literal) {
     return false;
   }
@@ -67,7 +66,7 @@ export function getImportSource(node: any): Node | false {
   return node.source;
 }
 
-export function getExportSource(node: any): Node | false {
+export function getExportSource(node: any): any | false {
   const exportNodes = [NodeType.ExportAllDeclaration, NodeType.ExportNamedDeclaration];
 
   if (!exportNodes.includes(node.type) || !node.source || node.source.type !== NodeType.Literal) {
